@@ -1,16 +1,15 @@
 import axios from 'axios'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 
 const table = {
   sports: 21,
   history: 23,
-  politics: 24,
+  celebrities: 26,
 }
 
 const API_ENDPOINT = 'https://opentdb.com/api.php?'
 
-const url = ''
-const tempUrl = 'https://opentdb.com/api.php?amount=10&category=21&difficulty=easy&type=multiple'
+//const url = ''
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
@@ -27,10 +26,10 @@ const AppProvider = ({ children }) => {
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const fetchQuestions = async (tempUrl) => {
+  const fetchQuestions = async (url) => {
     setLoading(true)
     setWaiting(false)
-    const response = await axios(tempUrl).catch((err) => console.log(err))
+    const response = await axios(url).catch((err) => console.log(err))
     if(response) {
       const data = response.data.results
       if(data.length > 0) {
@@ -86,7 +85,7 @@ const AppProvider = ({ children }) => {
     e.preventDefault()
     const { amount, category, difficulty } = quiz
     const url = `${API_ENDPOINT}amount=${amount}&category=${table[category]}&difficulty=${difficulty}&type=multiple`
-    fetchQuestions(tempUrl)
+    fetchQuestions(url)
   }
 
   return (
